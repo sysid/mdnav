@@ -1,3 +1,6 @@
+**NOTE: this project is no longer maintained, as I stopped using it. If you forked the project and continue to develop it, feel free to send me a message to include a link**.
+
+
 # mdnav - vim plugin for navigating links in markdown files
 
 Vim plugin for navigating links in markdown files.
