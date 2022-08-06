@@ -7,6 +7,7 @@ import re
 import sys
 import subprocess
 import webbrowser
+from typing import Tuple
 
 try:
     from urllib.parse import urlparse
@@ -103,8 +104,13 @@ def has_extension(path, extensions):
     return ext in extensions
 
 
-def has_scheme(target):
-    return bool(urlparse(target).scheme)
+def has_scheme(target) -> bool:
+    scheme, netloc, path, params, query, fragment = urlparse(target)
+    if scheme and path.isdigit():
+        return False
+    # not working with 3.10: https://stackoverflow.com/questions/1737575/are-colons-allowed-in-urls
+    # return bool(urlparse(target).scheme)
+    return bool(scheme)
 
 
 class Action(object):
@@ -333,7 +339,7 @@ link_pattern = re.compile(r'''
 ''', re.VERBOSE)
 
 
-def select_from_start_of_link(line, pos):
+def select_from_start_of_link(line, pos) -> Tuple[str | None, int]:
     """Return the start of the link string and the new cursor
     """
     if pos < len(line) and line[pos] == '[':
